@@ -15,6 +15,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -42,7 +44,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class ComposeFragment extends Fragment {
     public static final String TAG = "ComposeFragment";
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
+    public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
 
     private EditText etDescription;
     private Button btnCaptureImage;
@@ -61,6 +63,12 @@ public class ComposeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_compose, container, false);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_main, menu);
     }
 
     @Override

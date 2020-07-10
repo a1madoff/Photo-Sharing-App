@@ -9,9 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.instagramclone.fragments.GeneralUserProfileFragment;
 import com.parse.ParseFile;
 
 import java.util.List;
@@ -61,23 +64,67 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private TextView tvUsername;
         private ImageView ivImage;
         private TextView tvDescription;
+        private TextView tvCreatedAt;
+        private ImageView ivProfPhoto;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             ivImage = itemView.findViewById(R.id.ivImage);
             tvDescription = itemView.findViewById(R.id.tvDescription);
+            tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
+            ivProfPhoto = itemView.findViewById(R.id.ivProfPhoto);
+
+//            ivProfPhoto.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+//                    Fragment userFragment = new GeneralUserProfileFragment(posts.get(getAdapterPosition()).getUser());
+//                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, userFragment).commit();
+//                }
+//            });
         }
 
-        public void bind(Post post) {
+        public void bind(final Post post) {
             tvDescription.setText(post.getDescription());
             tvUsername.setText(post.getUser().getUsername());
+            tvCreatedAt.setText(ParseRelativeDate.getRelativeTimeAgo(post.getCreatedAt().toString()));
+
+            ivProfPhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    Fragment userFragment = new GeneralUserProfileFragment(post.getUser());
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, userFragment).commit();
+                }
+            });
+
+            tvUsername.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    Fragment userFragment = new GeneralUserProfileFragment(post.getUser());
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, userFragment).commit();
+                }
+            });
 
             ParseFile image = post.getImage();
             if (image != null) {
                 Glide.with(context)
                         .load(post.getImage().getUrl())
                         .into(ivImage);
+            }
+
+            ParseFile profFile = post.getUser().getParseFile("profilePicture");
+            if (profFile != null) {
+                Glide.with(context)
+                        .load(profFile.getUrl())
+                        .circleCrop()
+                        .into(ivProfPhoto);
+            } else {
+                Glide.with(context)
+                        .load(R.drawable.general_prof)
+                        .into(ivProfPhoto);
             }
         }
     }
