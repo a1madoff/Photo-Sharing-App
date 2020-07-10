@@ -29,6 +29,7 @@ import com.example.instagramclone.EndlessRecyclerViewScrollListener;
 import com.example.instagramclone.LoginActivity;
 import com.example.instagramclone.Post;
 import com.example.instagramclone.PostsAdapter;
+import com.example.instagramclone.ProfilePostsAdapter;
 import com.example.instagramclone.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -52,7 +53,7 @@ public class GeneralUserProfileFragment extends Fragment {
     private RecyclerView rvPosts;
     private TextView tvUsername;
 
-    protected PostsAdapter adapter;
+    protected ProfilePostsAdapter adapter;
     protected List<Post> allPosts;
     private EndlessRecyclerViewScrollListener scrollListener;
 
@@ -77,7 +78,7 @@ public class GeneralUserProfileFragment extends Fragment {
         tvUsername = view.findViewById(R.id.tvProfileUsername);
 
         allPosts = new ArrayList<>();
-        adapter = new PostsAdapter(getContext(), allPosts);
+        adapter = new ProfilePostsAdapter(getContext(), allPosts);
         rvPosts.setAdapter(adapter);
 
 //        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());

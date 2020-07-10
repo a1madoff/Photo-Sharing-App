@@ -22,12 +22,14 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.example.instagramclone.EndlessRecyclerViewScrollListener;
 import com.example.instagramclone.LoginActivity;
 import com.example.instagramclone.Post;
 import com.example.instagramclone.PostsAdapter;
+import com.example.instagramclone.ProfilePostsAdapter;
 import com.example.instagramclone.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -56,7 +58,7 @@ public class ProfileFragment extends Fragment {
     private RecyclerView rvPosts;
     private TextView tvUsername;
 
-    protected PostsAdapter adapter;
+    protected ProfilePostsAdapter adapter;
     protected List<Post> allPosts;
     private EndlessRecyclerViewScrollListener scrollListener;
 
@@ -77,10 +79,12 @@ public class ProfileFragment extends Fragment {
         tvUsername = view.findViewById(R.id.tvProfileUsername);
 
         allPosts = new ArrayList<>();
-        adapter = new PostsAdapter(getContext(), allPosts);
+        adapter = new ProfilePostsAdapter(getContext(), allPosts);
         rvPosts.setAdapter(adapter);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        StaggeredGridLayoutManager layoutManager =
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rvPosts.setLayoutManager(layoutManager);
 
         scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
