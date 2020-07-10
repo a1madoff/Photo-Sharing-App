@@ -48,4 +48,20 @@
         android:layout_below="@+id/tvDescription"
         android:layout_marginBottom="8dp"
         tools:text="8 min. ago" />
+
+    <EditText
+        android:id="@+id/etComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvCreatedAt"
+        android:layout_marginBottom="8dp"
+        android:hint="Comment" />
+
+    <Button
+        android:id="@+id/btnComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etComment"
+        android:layout_marginBottom="8dp"
+        android:text="Submit Comment" />
 </RelativeLayout>

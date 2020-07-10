@@ -10,10 +10,31 @@
     android:layout_marginRight="16dp"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="30dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/nav_logo_whiteout"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+
     <FrameLayout
         android:id="@+id/flContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolBar"
         android:layout_above="@id/bottomNavigation"
         />
 

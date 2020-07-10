@@ -21,11 +21,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.instagramclone.MainActivity;
@@ -38,7 +40,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -60,6 +65,7 @@ public class ComposeFragment extends Fragment {
 
     private File photoFile;
     private String photoFileName = "photo.jpg";
+    private byte[] bitmapdata;
 
     public ComposeFragment() {
         // Required empty public constructor
@@ -73,14 +79,9 @@ public class ComposeFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_main, menu);
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         etDescription = view.findViewById(R.id.etDescription);
         btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
         ivPostImage = view.findViewById(R.id.ivPostImage);
@@ -110,7 +111,7 @@ public class ComposeFragment extends Fragment {
                     return;
                 }
 
-                if (photoFile == null || ivPostImage.getDrawable() == null) {
+                if ((photoFile == null && bitmapdata == null) || ivPostImage.getDrawable() == null) {
                     Toast.makeText(getContext(), "There is no image!", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -169,7 +170,10 @@ public class ComposeFragment extends Fragment {
             Bitmap selectedImage = loadFromUri(photoUri);
             // Loads the taken image into the preview
             ivPostImage.setImageBitmap(selectedImage);
-            photoFile = new File();
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            selectedImage.compress(Bitmap.CompressFormat.PNG, 0 /*ignored for PNG*/, bos);
+            bitmapdata = bos.toByteArray();
         }
     }
 
@@ -209,7 +213,11 @@ public class ComposeFragment extends Fragment {
     private void savePost(String description, ParseUser currentUser, File photoFile) {
         Post post = new Post();
         post.setDescription(description);
-        post.setImage(new ParseFile(photoFile));
+        if (bitmapdata == null) {
+            post.setImage(new ParseFile(photoFile));
+        } else {
+            post.setImage(new ParseFile(bitmapdata));
+        }
         post.setUser(currentUser);
         post.saveInBackground(new SaveCallback() {
             @Override

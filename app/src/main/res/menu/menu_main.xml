@@ -7,8 +7,7 @@
         android:id="@+id/miActionProgress"
         android:orderInCategory="0"
         android:title="Loading..."
-        android:visibility="visible"
-        android:visible="true"
+        android:visible="false"
         app:actionLayout="@layout/action_view_progress"
         app:showAsAction="always" />
 

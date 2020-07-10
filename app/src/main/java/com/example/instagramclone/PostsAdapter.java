@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,11 +21,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.instagramclone.fragments.GeneralUserProfileFragment;
 import com.example.instagramclone.fragments.PostDetailsFragment;
+import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
+    public static final String TAG = "PostsAdapter";
 
     private Context context;
     private List<Post> posts;
@@ -70,6 +75,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private TextView tvDescription;
         private TextView tvCreatedAt;
         private ImageView ivProfPhoto;
+        private EditText etComment;
+        private Button btnComment;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,6 +85,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
             ivProfPhoto = itemView.findViewById(R.id.ivProfPhoto);
+            etComment = itemView.findViewById(R.id.etComment);
+            btnComment = itemView.findViewById(R.id.btnComment);
 
 //            ivProfPhoto.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -131,6 +140,19 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         .load(R.drawable.general_prof)
                         .into(ivProfPhoto);
             }
+
+            btnComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String commentText = etComment.getText().toString();
+
+                    Comment comment = new Comment();
+                    comment.setText(commentText);
+                    comment.setPost(post);
+
+                    comment.saveInBackground();
+                }
+            });
         }
 
         @Override

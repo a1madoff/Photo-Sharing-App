@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,10 +12,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.instagramclone.EndlessRecyclerViewScrollListener;
+import com.example.instagramclone.MainActivity;
 import com.example.instagramclone.Post;
 import com.example.instagramclone.PostsAdapter;
 import com.example.instagramclone.R;
@@ -39,6 +45,7 @@ public class PostsFragment extends Fragment {
     protected PostsAdapter adapter;
     protected List<Post> allPosts;
     private EndlessRecyclerViewScrollListener scrollListener;
+    private MenuItem actionViewItem;
 
     public PostsFragment() {
         // Required empty public constructor
@@ -47,6 +54,7 @@ public class PostsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         // Inflates the layout for this fragment
         return inflater.inflate(R.layout.fragment_posts, container, false);
     }
@@ -57,7 +65,6 @@ public class PostsFragment extends Fragment {
 
         rvPosts = view.findViewById(R.id.rvPosts);
         swipeContainer = view.findViewById(R.id.swipeContainer);
-
         // Configures the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
