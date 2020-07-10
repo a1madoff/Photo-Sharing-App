@@ -19,6 +19,12 @@
         android:layout_height="wrap_content"
         android:text="Take Picture" />
 
+    <Button
+        android:id="@+id/btnLibrary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Library" />
+
     <ImageView
         android:id="@+id/ivPostImage"
         android:layout_width="match_parent"

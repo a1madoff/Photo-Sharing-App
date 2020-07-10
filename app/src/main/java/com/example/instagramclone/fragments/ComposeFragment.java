@@ -1,15 +1,19 @@
 package com.example.instagramclone.fragments;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.loader.content.CursorLoader;
 
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -35,6 +39,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -45,11 +50,13 @@ import static android.app.Activity.RESULT_OK;
 public class ComposeFragment extends Fragment {
     public static final String TAG = "ComposeFragment";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
+    public final static int PICK_PHOTO_CODE = 1046;
 
     private EditText etDescription;
     private Button btnCaptureImage;
     private ImageView ivPostImage;
     private Button btnSubmit;
+    private Button btnLibrary;
 
     private File photoFile;
     private String photoFileName = "photo.jpg";
@@ -78,11 +85,19 @@ public class ComposeFragment extends Fragment {
         btnCaptureImage = view.findViewById(R.id.btnCaptureImage);
         ivPostImage = view.findViewById(R.id.ivPostImage);
         btnSubmit = view.findViewById(R.id.btnSubmit);
+        btnLibrary = view.findViewById(R.id.btnLibrary);
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 launchCamera();
+            }
+        });
+
+        btnLibrary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickPhoto();
             }
         });
 
@@ -122,6 +137,17 @@ public class ComposeFragment extends Fragment {
         }
     }
 
+    private void pickPhoto() {
+        // Creates intent for picking a photo from the gallery
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        if (intent.resolveActivity(getContext().getPackageManager()) != null) {
+            // Brings up gallery to select a photo
+            startActivityForResult(intent, PICK_PHOTO_CODE);
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -129,11 +155,21 @@ public class ComposeFragment extends Fragment {
             if (resultCode == RESULT_OK) {
                 // Camera photo is on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                // Loads the taken image into a preview
+                // Loads the taken image into the preview
                 ivPostImage.setImageBitmap(takenImage);
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
+        }
+
+        if ((data != null) && requestCode == PICK_PHOTO_CODE) {
+            Uri photoUri = data.getData();
+
+            // Loads the image located at photoUri into selectedImage
+            Bitmap selectedImage = loadFromUri(photoUri);
+            // Loads the taken image into the preview
+            ivPostImage.setImageBitmap(selectedImage);
+            photoFile = new File();
         }
     }
 
@@ -150,6 +186,24 @@ public class ComposeFragment extends Fragment {
 
         // Returns the file target for the photo based on filename
         return new File(mediaStorageDir.getPath() + File.separator + fileName);
+    }
+
+    public Bitmap loadFromUri(Uri photoUri) {
+        Bitmap image = null;
+        try {
+            // Checks version of Android on device
+            if(Build.VERSION.SDK_INT > 27){
+                // Uses the new decodeBitmap method for newer versions of Android
+                ImageDecoder.Source source = ImageDecoder.createSource(getContext().getContentResolver(), photoUri);
+                image = ImageDecoder.decodeBitmap(source);
+            } else {
+                // Supports older versions of Android by using getBitmap
+                image = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), photoUri);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 
     private void savePost(String description, ParseUser currentUser, File photoFile) {
