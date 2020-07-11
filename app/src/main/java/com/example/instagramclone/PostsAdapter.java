@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -78,6 +79,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private ImageView ivProfPhoto;
         private TextView tvBottomUsername;
         private TextView tvNumLikes;
+        private ImageView ivHeart;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -88,6 +90,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ivProfPhoto = itemView.findViewById(R.id.ivProfPhoto);
             tvBottomUsername = itemView.findViewById(R.id.tvBottomUsername);
             tvNumLikes = itemView.findViewById(R.id.tvNumLikes);
+            ivHeart = itemView.findViewById(R.id.ivHeart);
 
 //            ivProfPhoto.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -113,6 +116,17 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     AppCompatActivity activity = (AppCompatActivity) view.getContext();
                     Fragment userFragment = new GeneralUserProfileFragment(post.getUser());
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, userFragment).commit();
+                }
+            });
+
+            ivHeart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ivHeart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ufi_heart_active));
+                    int newNumLikes = post.getNumLikes() + 1;
+                    post.setNumLikes(newNumLikes);
+                    post.saveInBackground();
+                    tvNumLikes.setText(String.format("%s likes", String.valueOf(newNumLikes)));
                 }
             });
 

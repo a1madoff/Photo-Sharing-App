@@ -20,28 +20,58 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="14dp"
         android:layout_toEndOf="@+id/ivProfPhoto"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/black"
         tools:text="alex" />
 
     <ImageView
         android:id="@+id/ivImage"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:layout_below="@+id/ivProfPhoto"
         android:layout_marginTop="10dp"
         android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/avatars" />
 
+    <ImageView
+        android:id="@+id/ivHeart"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/ivImage"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        app:srcCompat="@drawable/ufi_heart" />
+
+    <ImageView
+        android:id="@+id/ivComment"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/ivImage"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/ivHeart"
+        app:srcCompat="@drawable/ufi_comment" />
+
+    <TextView
+        android:id="@+id/tvBottomUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNumLikes"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="5dp"
+        tools:text="alex" />
+
     <TextView
         android:id="@+id/tvDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivImage"
-        android:layout_marginBottom="8dp"
+        android:layout_below="@+id/tvNumLikes"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/tvBottomUsername"
         tools:text="Bottom text" />
 
     <TextView
@@ -51,6 +81,7 @@
         android:layout_below="@+id/ivImage"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="5dp"
         tools:text="8 min. ago" />
 
@@ -58,7 +89,7 @@
         android:id="@+id/etComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvCreatedAt"
+        android:layout_below="@+id/tvDescription"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="8dp"
         android:layout_toStartOf="@+id/btnComment"
@@ -68,7 +99,7 @@
         android:id="@+id/btnComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvCreatedAt"
+        android:layout_below="@+id/tvDescription"
         android:layout_marginBottom="8dp"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="0dp"
@@ -78,25 +109,15 @@
         android:id="@+id/tvNumLikes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etComment"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_toStartOf="@+id/btnComment"
-        android:text="828 likes" />
-
-    <Button
-        android:id="@+id/btnLike"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etComment"
-        android:layout_marginBottom="8dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="0dp"
-        android:text="Like" />
+        android:layout_below="@+id/ivHeart"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:text="828 likes"
+        android:textColor="@android:color/black"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvComments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnLike" />
+        android:layout_below="@+id/etComment" />
 </RelativeLayout>

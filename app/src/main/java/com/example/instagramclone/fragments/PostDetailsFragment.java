@@ -1,10 +1,12 @@
 package com.example.instagramclone.fragments;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -50,7 +52,9 @@ public class PostDetailsFragment extends Fragment {
     private EditText etComment;
     private Button btnComment;
     private TextView tvNumLikes;
-    private Button btnLike;
+    private ImageView ivHeart;
+    private TextView tvBottomUsername;
+    private ImageView ivComment;
 
     public PostDetailsFragment() {
         // Required empty public constructor
@@ -76,17 +80,29 @@ public class PostDetailsFragment extends Fragment {
         etComment = view.findViewById(R.id.etComment);
         btnComment = view.findViewById(R.id.btnComment);
         tvNumLikes = view.findViewById(R.id.tvNumLikes);
-        btnLike = view.findViewById(R.id.btnLike);
+        ivHeart = view.findViewById(R.id.ivHeart);
+        tvBottomUsername = view.findViewById(R.id.tvBottomUsername);
+        ivComment = view.findViewById(R.id.ivComment);
 
         tvDescription.setText(post.getDescription());
         tvUsername.setText(post.getUser().getUsername());
         tvCreatedAt.setText(ParseRelativeDate.getRelativeTimeAgo(post.getCreatedAt().toString()));
         tvNumLikes.setText(String.format("%s likes", String.valueOf(post.getNumLikes())));
+        tvBottomUsername.setText(post.getUser().getUsername());
 
-        btnLike.setOnClickListener(new View.OnClickListener() {
+        ivComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: change so that checks to see if post is already likes
+                etComment.requestFocus();
+//                getContext().getDialog().getWindow().setSoftInputMode(
+//                        WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+            }
+        });
+
+        ivHeart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ivHeart.setImageDrawable(getResources().getDrawable(R.drawable.ufi_heart_active));
                 int newNumLikes = post.getNumLikes() + 1;
                 post.setNumLikes(newNumLikes);
                 post.saveInBackground();

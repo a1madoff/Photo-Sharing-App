@@ -9,13 +9,18 @@
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:srcCompat="@drawable/nav_logo_whiteout" />
+
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
-        android:hint="username" />
+        android:hint="Username" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -23,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
-        android:hint="password"
+        android:hint="Password"
         android:inputType="textPassword"/>
 
     <Button
@@ -31,12 +36,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Login" />
+        android:background="#3f97f0"
+        android:text="Log In"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/btnSignup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Sign Up" />
+        android:text="Sign Up"
+        android:background="#70c050"
+        android:layout_marginTop="10dp"
+        android:textColor="@android:color/white"/>
 </LinearLayout>
