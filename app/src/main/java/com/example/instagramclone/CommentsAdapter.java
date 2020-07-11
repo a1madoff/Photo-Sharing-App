@@ -67,13 +67,17 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         public void bind(Comment comment) {
             tvComment.setText(comment.getText());
             try {
-                tvUsername.setText(comment.getPost().getUser().fetchIfNeeded().getUsername());
+                tvUsername.setText(comment.getCommenter().fetchIfNeeded().getUsername());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            tvCreatedAt.setText(ParseRelativeDate.getRelativeTimeAgo(comment.getCreatedAt().toString()));
+            try {
+                tvCreatedAt.setText(ParseRelativeDate.getRelativeTimeAgo(comment.fetch().getCreatedAt().toString()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-            ParseFile profFile = comment.getPost().getUser().getParseFile("profilePicture");
+            ParseFile profFile = comment.getCommenter().getParseFile("profilePicture");
             if (profFile != null) {
                 Glide.with(context)
                         .load(profFile.getUrl())

@@ -5,23 +5,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="8dp">
+    android:orientation="vertical" >
 
     <ImageView
         android:id="@+id/ivProfPhoto"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:srcCompat="@drawable/general_prof" />
+        app:srcCompat="@drawable/general_prof"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"/>
 
     <TextView
         android:id="@+id/tvUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="19dp"
         android:layout_toEndOf="@+id/ivProfPhoto"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
         tools:text="alex" />
 
     <ImageView
@@ -34,11 +35,34 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tvDescription"
-        android:layout_width="match_parent"
+        android:id="@+id/tvNumLikes"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivImage"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="8dp"
+        android:textColor="@android:color/black"
+        tools:text="0 likes" />
+
+    <TextView
+        android:id="@+id/tvBottomUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNumLikes"
+        android:layout_marginBottom="8dp"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="5dp"
+        tools:text="alex" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNumLikes"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="8dp"
+        android:layout_toEndOf="@+id/tvBottomUsername"
         tools:text="Bottom text" />
 
     <TextView
@@ -47,21 +71,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvDescription"
         android:layout_marginBottom="8dp"
+        android:layout_marginStart="5dp"
         tools:text="8 min. ago" />
-
-    <EditText
-        android:id="@+id/etComment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvCreatedAt"
-        android:layout_marginBottom="8dp"
-        android:hint="Comment" />
-
-    <Button
-        android:id="@+id/btnComment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etComment"
-        android:layout_marginBottom="8dp"
-        android:text="Submit Comment" />
 </RelativeLayout>

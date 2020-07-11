@@ -23,6 +23,7 @@ import com.example.instagramclone.fragments.GeneralUserProfileFragment;
 import com.example.instagramclone.fragments.PostDetailsFragment;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.List;
@@ -75,8 +76,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private TextView tvDescription;
         private TextView tvCreatedAt;
         private ImageView ivProfPhoto;
-        private EditText etComment;
-        private Button btnComment;
+        private TextView tvBottomUsername;
+        private TextView tvNumLikes;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,8 +86,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
             ivProfPhoto = itemView.findViewById(R.id.ivProfPhoto);
-            etComment = itemView.findViewById(R.id.etComment);
-            btnComment = itemView.findViewById(R.id.btnComment);
+            tvBottomUsername = itemView.findViewById(R.id.tvBottomUsername);
+            tvNumLikes = itemView.findViewById(R.id.tvNumLikes);
 
 //            ivProfPhoto.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -103,6 +104,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvDescription.setText(post.getDescription());
             tvUsername.setText(post.getUser().getUsername());
             tvCreatedAt.setText(ParseRelativeDate.getRelativeTimeAgo(post.getCreatedAt().toString()));
+            tvBottomUsername.setText(post.getUser().getUsername());
+            tvNumLikes.setText(String.format("%s likes", String.valueOf(post.getNumLikes())));
 
             ivProfPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -140,19 +143,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         .load(R.drawable.general_prof)
                         .into(ivProfPhoto);
             }
-
-            btnComment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String commentText = etComment.getText().toString();
-
-                    Comment comment = new Comment();
-                    comment.setText(commentText);
-                    comment.setPost(post);
-
-                    comment.saveInBackground();
-                }
-            });
         }
 
         @Override
