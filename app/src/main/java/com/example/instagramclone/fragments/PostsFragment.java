@@ -45,7 +45,6 @@ public class PostsFragment extends Fragment {
     protected PostsAdapter adapter;
     protected List<Post> allPosts;
     private EndlessRecyclerViewScrollListener scrollListener;
-    private MenuItem actionViewItem;
 
     public PostsFragment() {
         // Required empty public constructor

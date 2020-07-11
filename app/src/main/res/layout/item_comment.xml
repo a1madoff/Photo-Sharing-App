@@ -4,9 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="8dp">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/ivProfPhoto"
@@ -24,34 +22,20 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         tools:text="alex" />
 
-    <ImageView
-        android:id="@+id/ivImage"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_below="@+id/ivProfPhoto"
-        android:layout_marginTop="10dp"
-        android:scaleType="centerCrop"
-        tools:srcCompat="@tools:sample/avatars" />
-
     <TextView
-        android:id="@+id/tvDescription"
+        android:id="@+id/tvComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ivImage"
+        android:layout_below="@+id/ivProfPhoto"
         android:layout_marginBottom="8dp"
-        tools:text="Bottom text" />
+        tools:text="Comment text" />
 
     <TextView
         android:id="@+id/tvCreatedAt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDescription"
+        android:layout_below="@+id/tvComment"
         android:layout_marginBottom="8dp"
         tools:text="8 min. ago" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvComments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvCreatedAt" />
 </RelativeLayout>

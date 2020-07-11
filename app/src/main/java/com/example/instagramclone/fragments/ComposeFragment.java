@@ -62,6 +62,7 @@ public class ComposeFragment extends Fragment {
     private ImageView ivPostImage;
     private Button btnSubmit;
     private Button btnLibrary;
+    private ProgressBar pbLoading;
 
     private File photoFile;
     private String photoFileName = "photo.jpg";
@@ -87,6 +88,7 @@ public class ComposeFragment extends Fragment {
         ivPostImage = view.findViewById(R.id.ivPostImage);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         btnLibrary = view.findViewById(R.id.btnLibrary);
+        pbLoading = view.findViewById(R.id.pbLoading);
 
         btnCaptureImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +107,7 @@ public class ComposeFragment extends Fragment {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                pbLoading.setVisibility(ProgressBar.VISIBLE);
                 String description = etDescription.getText().toString();
                 if (description.isEmpty()) {
                     Toast.makeText(getContext(), "Description cannot be empty", Toast.LENGTH_SHORT).show();
@@ -230,6 +233,7 @@ public class ComposeFragment extends Fragment {
                 Log.i(TAG, "Post save was successful!");
                 etDescription.setText("");
                 ivPostImage.setImageResource(0);
+                pbLoading.setVisibility(ProgressBar.INVISIBLE);
             }
         });
     }
