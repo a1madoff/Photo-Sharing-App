@@ -121,14 +121,14 @@ public class ProfileFragment extends Fragment {
         tvUsername.setText(ParseUser.getCurrentUser().getUsername());
 
         ParseFile profFile = ParseUser.getCurrentUser().getParseFile("profilePicture");
-        if (profFile != null) {
+        if (profFile == null) {
             Glide.with(getContext())
-                    .load(profFile.getUrl())
-                    .circleCrop()
+                    .load(R.drawable.no_prof_pic)
                     .into(ivProfPhoto);
         } else {
             Glide.with(getContext())
-                    .load(R.drawable.no_prof_pic)
+                    .load(profFile.getUrl())
+                    .circleCrop()
                     .into(ivProfPhoto);
         }
 
